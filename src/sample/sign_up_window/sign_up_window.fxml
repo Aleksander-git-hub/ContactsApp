@@ -16,9 +16,8 @@
                   <Font size="33.0" />
                </font>
             </Label>
-            <TextField fx:id="loginNewUser" layoutX="271.0" layoutY="63.0" promptText="Enter login" />
-            <PasswordField fx:id="passwordNewUser" layoutX="271.0" layoutY="97.0" promptText="Enter password" />
-            <PasswordField fx:id="passwordRepNewUser" layoutX="271.0" layoutY="128.0" promptText="Repeat password" />
+            <TextField fx:id="loginNewUser" layoutX="271.0" layoutY="63.0" prefWidth="149.0" promptText="Enter login" />
+            <PasswordField fx:id="passwordNewUser" layoutX="271.0" layoutY="114.0" promptText="Enter password" />
             <TextField fx:id="emailNewUser" layoutX="271.0" layoutY="161.0" promptText="Email" />
             <Button fx:id="signUpNewUser" layoutX="278.0" layoutY="203.0" mnemonicParsing="false" prefHeight="61.0" prefWidth="138.0" style="-fx-background-color: red;" text="SignUP" textFill="#f5f3f3">
                <font>

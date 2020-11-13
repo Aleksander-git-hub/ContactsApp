@@ -24,13 +24,11 @@ public class SignUpController {
     private PasswordField passwordNewUser;
 
     @FXML
-    private PasswordField passwordRepNewUser;
-
-    @FXML
     private TextField emailNewUser;
 
     @FXML
     private Button signUpNewUser;
+
 
     @FXML
     void initialize() {
