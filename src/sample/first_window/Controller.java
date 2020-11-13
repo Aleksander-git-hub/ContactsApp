@@ -13,8 +13,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import sample.animations.Shake;
 import sample.dao.DataBaseHandler;
 import sample.users.User;
+
+import javax.xml.soap.Node;
 
 public class Controller
 {
@@ -112,6 +115,11 @@ public class Controller
         }
         if (counter >= 1) {
             System.out.println("SUCCESS!");
+        } else {
+            Shake userLoginAnimation = new Shake(loginField);
+            Shake userPasswordAnimation = new Shake(passwordField);
+            userLoginAnimation.playAnimation();
+            userPasswordAnimation.playAnimation();
         }
     }
 }
