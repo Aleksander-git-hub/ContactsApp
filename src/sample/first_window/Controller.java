@@ -34,6 +34,18 @@ public class Controller
 
     @FXML
     void initialize() {
+
+        signButton.setOnAction(event -> {
+            String loginText = loginField.getText().trim(); // trim удаляет ненужные пробелы
+            String loginPassword = passwordField.getText().trim(); // trim удаляет ненужные пробелы
+
+            if (!loginText.equals("") && loginPassword.equals("")) {
+                loginUser(loginText, loginPassword);
+            } else {
+                System.out.println("Login and password are empty!!!");
+            }
+        });
+
         // РЕГИСТРАЦИЯ
         loginSignUpButton.setOnAction(event -> {
             // закрываем firstWindow
@@ -71,6 +83,10 @@ public class Controller
             stage.setScene(new Scene(root));
             stage.showAndWait();
         });
+    }
+
+    private void loginUser(String loginText, String loginUser) {
+
     }
 }
 
