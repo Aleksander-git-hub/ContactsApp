@@ -1,4 +1,4 @@
-package sample.sign_up_window;
+package sample.windows.sign_up_window;
 
 import java.net.URL;
 import java.util.ResourceBundle;

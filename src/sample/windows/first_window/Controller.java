@@ -1,4 +1,4 @@
-package sample.first_window;
+package sample.windows.first_window;
 
 import java.io.IOException;
 import java.net.URL;
@@ -16,8 +16,6 @@ import javafx.stage.Stage;
 import sample.animations.Shake;
 import sample.dao.DataBaseHandler;
 import sample.users.User;
-
-import javax.xml.soap.Node;
 
 public class Controller
 {
@@ -61,7 +59,7 @@ public class Controller
             // отобразим нужно окно
             FXMLLoader loader = new FXMLLoader();
             // указываем локацию нужного файла
-            loader.setLocation(getClass().getResource("/sample/sign_up_window/sign_up_window.fxml"));
+            loader.setLocation(getClass().getResource("/sample/windows/sign_up_window/sign_up_window.fxml"));
             // далее загружаем файл для отображения
             try {
                 loader.load();

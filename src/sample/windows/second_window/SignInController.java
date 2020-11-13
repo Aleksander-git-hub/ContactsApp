@@ -1,4 +1,4 @@
-package sample.second_window;
+package sample.windows.second_window;
 
 import java.net.URL;
 import java.util.ResourceBundle;

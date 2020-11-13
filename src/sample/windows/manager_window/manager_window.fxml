@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="700.0" style="-fx-background-color: #2E3348; -fx-border-color: silver;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.windows.manager_window.ManagerWindowController">
+    <children>
+        <AnchorPane layoutX="5.0" layoutY="91.0" prefHeight="306.0" prefWidth="690.0" style="-fx-background-color: #fafafa;">
+         <children>
+            <Button fx:id="addButton" layoutX="37.0" layoutY="223.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="105.0" style="-fx-background-color: green; -fx-border-color: black;" text="ADD">
+               <font>
+                  <Font name="Tahoma" size="20.0" />
+               </font>
+            </Button>
+            <Button fx:id="deleteButton" layoutX="206.0" layoutY="223.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="105.0" style="-fx-background-color: red; -fx-border-color: black;" text="Delete" textFill="#f5f0f0">
+               <font>
+                  <Font name="Tahoma Bold" size="20.0" />
+               </font>
+            </Button>
+            <Button fx:id="updateButton" layoutX="378.0" layoutY="223.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="105.0" style="-fx-background-color: yellow; -fx-border-color: black;" text="Update">
+               <font>
+                  <Font name="Tahoma Bold" size="20.0" />
+               </font>
+            </Button>
+            <Button fx:id="getAllButton" layoutX="543.0" layoutY="223.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="105.0" style="-fx-border-color: black;" text="Get All">
+               <font>
+                  <Font name="Tahoma Bold" size="20.0" />
+               </font>
+            </Button>
+            <TextField layoutX="53.0" layoutY="29.0" prefHeight="37.0" prefWidth="584.0" promptText="Hi boss! Here you can add, delete, update your contacts!">
+               <font>
+                  <Font name="Sitka Small Italic" size="20.0" />
+               </font>
+            </TextField>
+            <ImageView fitHeight="152.0" fitWidth="200.0" layoutX="269.0" layoutY="66.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../assets/cat.png" />
+               </image>
+            </ImageView>
+         </children>
+        </AnchorPane>
+        <Label layoutX="192.0" text="MyContacts" textFill="#ebe8e8">
+            <font>
+                <Font size="66.0" />
+            </font>
+        </Label>
+    </children>
+</AnchorPane>
