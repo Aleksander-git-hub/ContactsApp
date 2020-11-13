@@ -4,13 +4,14 @@ package sample.dao;
  Work with DB
  */
 
+import sample.users.User;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class DataBaseHandler extends Configs
-{
+public class DataBaseHandler extends Configs {
     Connection dbConnection;
 
     public Connection getDbConnection()
@@ -28,27 +29,22 @@ public class DataBaseHandler extends Configs
     }
 
     // записываем пользователя в БД
-    public void signUpUser(String login, String password, String passwordRep, String email) {
-        if (password.equals(passwordRep)) {
-            // в этой строке SQL запрос в БД при помощи которого добавляем
-            String insert = "INSERT INTO " + Const.USER_TABLE + " (" +
-                    Const.USER_LOGIN + ", " + Const.USER_PASSWORD + ", " +
-                    Const.USER_EMAIL + ") " + "VALUES(?,?,?)";
+    public void signUpUser(User user) {
+        // в этой строке SQL запрос в БД при помощи которого добавляем
+        String insert = "INSERT INTO " + Const.USER_TABLE + " (" +
+                Const.USER_LOGIN + ", " + Const.USER_PASSWORD + ", " +
+                Const.USER_EMAIL + ") " + "VALUES(?,?,?)";
 
-            // прописываем данные которые здесь "VALUES(?,?,?)"
-            try {
-                PreparedStatement statement = getDbConnection().prepareStatement(insert);
-                statement.setString(1, login);
-                statement.setString(2, password);
-                statement.setString(3, email);
-                // выполнить эту команду
-                statement.executeUpdate();
-            } catch (SQLException | ClassNotFoundException throwables) {
-                throwables.printStackTrace();
-            }
-        } else {
-
-            System.out.println("Your passwords do not match");
+        // прописываем данные которые здесь "VALUES(?,?,?)"
+        try {
+            PreparedStatement statement = getDbConnection().prepareStatement(insert);
+            statement.setString(1, user.getLogin());
+            statement.setString(2, user.getPassword());
+            statement.setString(3, user.getEmail());
+            // выполнить эту команду
+            statement.executeUpdate();
+        } catch (SQLException | ClassNotFoundException throwables) {
+            throwables.printStackTrace();
         }
     }
 }

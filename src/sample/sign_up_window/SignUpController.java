@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import sample.dao.DataBaseHandler;
+import sample.users.User;
 
 public class SignUpController {
 
@@ -34,11 +35,21 @@ public class SignUpController {
     @FXML
     void initialize() {
 
-
-        DataBaseHandler handler = new DataBaseHandler();
         signUpNewUser.setOnAction(event -> {
-            handler.signUpUser(loginNewUser.getText(), passwordNewUser.getText(),
-                    passwordRepNewUser.getText(), emailNewUser.getText());
+            signUser();
         });
     }
+
+    private void signUser() {
+        DataBaseHandler handler = new DataBaseHandler();
+
+        String login = loginNewUser.getText();
+        String password = passwordNewUser.getText();
+        String email = emailNewUser.getText();
+
+        User user = new User(login, password, email);
+
+        handler.signUpUser(user);
+    }
+
 }
