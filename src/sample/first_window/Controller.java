@@ -2,6 +2,8 @@ package sample.first_window;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,6 +13,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import sample.dao.DataBaseHandler;
+import sample.users.User;
 
 public class Controller
 {
@@ -35,11 +39,12 @@ public class Controller
     @FXML
     void initialize() {
 
+        // Кнопка войти
         signButton.setOnAction(event -> {
             String loginText = loginField.getText().trim(); // trim удаляет ненужные пробелы
             String loginPassword = passwordField.getText().trim(); // trim удаляет ненужные пробелы
 
-            if (!loginText.equals("") && loginPassword.equals("")) {
+            if (!loginText.equals("") && !loginPassword.equals("")) {
                 loginUser(loginText, loginPassword);
             } else {
                 System.out.println("Login and password are empty!!!");
@@ -68,25 +73,46 @@ public class Controller
             stage.showAndWait();
         });
 
-        // ВХОД
-        signButton.setOnAction(event -> {
-            signButton.getScene().getWindow().hide();
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/sample/second_window/sign_in_window.fxml"));
-            try {
-                loader.load();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            Parent root = loader.getRoot();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.showAndWait();
-        });
+//        // ВХОД
+//        signButton.setOnAction(event -> {
+//            signButton.getScene().getWindow().hide();
+//            FXMLLoader loader = new FXMLLoader();
+//            loader.setLocation(getClass().getResource("/sample/second_window/sign_in_window.fxml"));
+//            try {
+//                loader.load();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//            Parent root = loader.getRoot();
+//            Stage stage = new Stage();
+//            stage.setScene(new Scene(root));
+//            stage.showAndWait();
+//        });
     }
 
-    private void loginUser(String loginText, String loginUser) {
+    private void loginUser(String loginText, String loginPassword) {
+        DataBaseHandler handler = new DataBaseHandler();
+        User user = new User();
+        user.setLogin(loginText);
+        user.setPassword(loginPassword);
+        ResultSet resultSet = handler.getUser(user);
 
+        int counter = 0;
+        // проходим по всем взятым пользователям из БД
+//        while (resultSet.next()) {
+//            counter++;
+//        }
+        while (true) {
+            try {
+                if (!resultSet.next()) break;
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+            counter++;
+        }
+        if (counter >= 1) {
+            System.out.println("SUCCESS!");
+        }
     }
 }
 

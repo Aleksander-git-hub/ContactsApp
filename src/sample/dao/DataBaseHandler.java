@@ -6,10 +6,7 @@ package sample.dao;
 
 import sample.users.User;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class DataBaseHandler extends Configs {
     Connection dbConnection;
@@ -42,9 +39,28 @@ public class DataBaseHandler extends Configs {
             statement.setString(2, user.getPassword());
             statement.setString(3, user.getEmail());
             // выполнить эту команду
-            statement.executeUpdate();
+            statement.executeUpdate(); // метод, который закидывает в базу данных
         } catch (SQLException | ClassNotFoundException throwables) {
             throwables.printStackTrace();
         }
+    }
+
+    // метод для получения данных из БД
+    // ResultSet будет массив из полей нашего пользователя
+    public ResultSet getUser(User user) {
+        ResultSet resultSet = null;
+
+        String select = "SELECT * FROM " + Const.USER_TABLE + " WHERE " +
+                Const.USER_LOGIN + "= ? AND " + Const.USER_PASSWORD + "= ?";
+        try {
+            PreparedStatement statement = getDbConnection().prepareStatement(select);
+            statement.setString(1, user.getLogin());
+            statement.setString(2, user.getPassword());
+
+            resultSet = statement.executeQuery(); // метод, который позволяет получить из БД
+        } catch (SQLException | ClassNotFoundException throwables) {
+            throwables.printStackTrace();
+        }
+        return resultSet;
     }
 }
