@@ -46,7 +46,11 @@ public class Controller
             String loginPassword = passwordField.getText().trim(); // trim удаляет ненужные пробелы
 
             if (!loginText.equals("") && !loginPassword.equals("")) {
-                loginUser(loginText, loginPassword);
+                boolean tmp = loginUser(loginText, loginPassword);
+                signButton.setOnAction(event1 -> {
+                    entrance();
+                    System.out.println("Entrance has been complete");
+                });
             } else {
                 System.out.println("Login and password are empty!!!");
             }
@@ -74,24 +78,14 @@ public class Controller
             stage.showAndWait();
         });
 
-//        // ВХОД
+//        // Вход в ManagerWindow
 //        signButton.setOnAction(event -> {
-//            signButton.getScene().getWindow().hide();
-//            FXMLLoader loader = new FXMLLoader();
-//            loader.setLocation(getClass().getResource("/sample/second_window/sign_in_window.fxml"));
-//            try {
-//                loader.load();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//            Parent root = loader.getRoot();
-//            Stage stage = new Stage();
-//            stage.setScene(new Scene(root));
-//            stage.showAndWait();
+//           entrance();
 //        });
     }
 
-    private void loginUser(String loginText, String loginPassword) {
+    private boolean loginUser(String loginText, String loginPassword) {
+        boolean tmp = false;
         DataBaseHandler handler = new DataBaseHandler();
         User user = new User();
         user.setLogin(loginText);
@@ -113,12 +107,30 @@ public class Controller
         }
         if (counter >= 1) {
             System.out.println("SUCCESS!");
+            tmp = true;
         } else {
             Shake userLoginAnimation = new Shake(loginField);
             Shake userPasswordAnimation = new Shake(passwordField);
             userLoginAnimation.playAnimation();
             userPasswordAnimation.playAnimation();
         }
+        return tmp;
+    }
+
+    // Вход в ManagerWindow
+    private void entrance() {
+        signButton.getScene().getWindow().hide();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/sample/windows/manager_window/manager_window.fxml"));
+        try {
+            loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Parent root = loader.getRoot();
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.showAndWait();
     }
 }
 

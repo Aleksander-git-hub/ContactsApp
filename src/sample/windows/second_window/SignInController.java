@@ -22,8 +22,6 @@ public class SignInController {
 
     @FXML
     void initialize() {
-        assert textHW != null : "fx:id=\"textHW\" was not injected: check your FXML file 'sign_in_window.fxml'.";
-        assert imageButton != null : "fx:id=\"imageButton\" was not injected: check your FXML file 'sign_in_window.fxml'.";
 
     }
 }
