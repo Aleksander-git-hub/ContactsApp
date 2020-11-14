@@ -1,9 +1,12 @@
 package sample.windows.sign_up_window;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
+import java.util.Properties;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,6 +19,10 @@ import javafx.stage.Stage;
 import sample.animations.Shake;
 import sample.dao.DataBaseHandler;
 import sample.users.User;
+
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 public class SignUpController {
 
@@ -53,9 +60,16 @@ public class SignUpController {
 
             if (!loginText.equals("") && !passwordText.equals("")) {
                 boolean flag = signUser(user, handler);
+                // если не зарегистрирован, то добавляем в БД
                 if (flag) {
                     System.out.println("Success");
                     handler.signUpUser(user);
+                    // после добавления в БД отсылаем на почту сообщение об успешной регистрации
+                    try {
+                        sendMail(user);
+                    } catch (IOException | MessagingException e) {
+                        e.printStackTrace();
+                    }
                     entrance();
                 }
             } else {
@@ -64,6 +78,49 @@ public class SignUpController {
             }
 
         });
+    }
+
+    private void sendMail(User user) throws IOException, MessagingException {
+        FileInputStream fileInputStream = new FileInputStream("config_mail.properties");
+        Properties properties = new Properties();
+        properties.load(fileInputStream);
+
+        String adminUser = properties.getProperty("mail.user");
+        String adminPassword = properties.getProperty("mail.password");
+        String mailHost = properties.getProperty("mail.host");
+        String mailSSL = properties.getProperty("mail.ssl");
+        String mailPort = properties.getProperty("mail.port");
+
+        String recipient = user.getEmail();
+
+        Properties properties1 = new Properties();
+        properties1.put("mail.smtp.host", mailHost);
+        properties1.put("mail.smtp.ssl.enable", mailSSL);
+        properties1.put("mail.smtp.port", mailPort);
+        properties1.put("mail.smtp.auth", "true");
+
+        Session session = Session.getInstance(properties1, new Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(adminUser, adminPassword);
+            }
+        });
+
+        Transport.send(buildMessage(session, adminUser, recipient, user.getLogin()));
+    }
+
+    private Message buildMessage(Session session, String adminUser, String recipient,
+                              String login) throws MessagingException {
+        Message message = new MimeMessage(session);
+        message.setFrom(new InternetAddress(adminUser));
+        InternetAddress address = new InternetAddress(recipient);
+        message.setRecipient(Message.RecipientType.TO, address);
+        message.setSubject("Successful registration message");
+        message.setSentDate(new Date());
+        message.setText("Dear, " + login + "!\n" +
+                "You are successfully registered in our application \"MyContacts\". " +
+                "We wish you a pleasant use!");
+        return message;
     }
 
     //  после добавления нового user заходим в ManagerWindow
