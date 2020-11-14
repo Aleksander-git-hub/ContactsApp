@@ -47,11 +47,12 @@ public class Controller
 
             if (!loginText.equals("") && !loginPassword.equals("")) {
                 boolean tmp = loginUser(loginText, loginPassword);
-                signButton.setOnAction(event1 -> {
+                if (tmp) {
                     entrance();
                     System.out.println("Entrance has been complete");
-                });
+                }
             } else {
+                shakeFields();
                 System.out.println("Login and password are empty!!!");
             }
         });
@@ -109,12 +110,16 @@ public class Controller
             System.out.println("SUCCESS!");
             tmp = true;
         } else {
-            Shake userLoginAnimation = new Shake(loginField);
-            Shake userPasswordAnimation = new Shake(passwordField);
-            userLoginAnimation.playAnimation();
-            userPasswordAnimation.playAnimation();
+            shakeFields();
         }
         return tmp;
+    }
+
+    private void shakeFields() {
+        Shake userLoginAnimation = new Shake(loginField);
+        Shake userPasswordAnimation = new Shake(passwordField);
+        userLoginAnimation.playAnimation();
+        userPasswordAnimation.playAnimation();
     }
 
     // Вход в ManagerWindow
