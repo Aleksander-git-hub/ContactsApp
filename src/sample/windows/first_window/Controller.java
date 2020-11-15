@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 import sample.animations.Shake;
 import sample.dao.DataBaseHandler;
 import sample.users.User;
+import sample.windows.sign_up_window.SignUpController;
 
 public class Controller
 {
@@ -49,6 +50,9 @@ public class Controller
                 boolean tmp = loginUser(loginText, loginPassword);
                 if (tmp) {
                     entrance();
+                    /*ManagerWindowController managerWindowController =
+                            new ManagerWindowController();
+                    managerWindowController.entrance(signButton);*/
                     System.out.println("Entrance has been complete");
                 }
             } else {
@@ -59,30 +63,23 @@ public class Controller
 
         // РЕГИСТРАЦИЯ
         loginSignUpButton.setOnAction(event -> {
-            // закрываем firstWindow
             loginSignUpButton.getScene().getWindow().hide();
-            // отобразим нужно окно
-            FXMLLoader loader = new FXMLLoader();
-            // указываем локацию нужного файла
-            loader.setLocation(getClass().getResource("/sample/windows/sign_up_window/sign_up_window.fxml"));
-            // далее загружаем файл для отображения
+            Stage stage = new Stage();
             try {
-                loader.load();
+                Parent root = FXMLLoader.load(SignUpController.class.
+                        getResource("/sample/windows/sign_up_window/sign_up_window.fxml"));
+                stage.setScene(new Scene(root));
+                stage.show();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
-            Parent root = loader.getRoot(); // путь к нужному нам файлу
-            Stage stage = new Stage();
-            // указываем нужное окно, которое нам надо загрузить
-            stage.setScene(new Scene(root));
-            stage.showAndWait();
         });
 
 //        // Вход в ManagerWindow
 //        signButton.setOnAction(event -> {
 //           entrance();
 //        });
+
     }
 
     private boolean loginUser(String loginText, String loginPassword) {

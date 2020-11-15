@@ -10,7 +10,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import sample.windows.add_window.AddWindowController;
 
 public class ManagerWindowController {
 
@@ -34,18 +36,18 @@ public class ManagerWindowController {
 
     @FXML
     void initialize() {
-        // модальное окно добавление контакта
         addButton.setOnAction(event -> {
+            Stage stage = new Stage();
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().
+                Parent root = FXMLLoader.load(AddWindowController.class.
                         getResource("/sample/windows/add_window/add_window.fxml"));
-                Parent root = (Parent) loader.load();
-                Stage stage = new Stage();
                 stage.setScene(new Scene(root));
+                stage.initModality(Modality.APPLICATION_MODAL);
                 stage.show();
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
         });
     }
 }
