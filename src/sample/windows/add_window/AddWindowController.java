@@ -2,6 +2,7 @@ package sample.windows.add_window;
 
 import java.net.URL;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -46,13 +47,38 @@ public class AddWindowController {
             !phoneNumber.equals("") && !email.equals("")) {
                 Contact contact = new Contact(firstName, secondName,
                         phoneNumber, email);
-
-                setNewContact(contact);
-                System.out.println("Contact add successfully");
+                // проверяем по номеру есть такой контакт или нет в БД
+                boolean flag = contactValidator(contact.getPhoneNumber());
+                if (flag) {
+                    setNewContact(contact);
+                    System.out.println("Contact add successfully");
+                }
             } else {
                 shakeFields();
             }
         });
+    }
+
+    // проверяем по номеру есть такой контакт или нет в БД
+    private boolean contactValidator(String phoneNumber) {
+        boolean flag = true;
+        DataBaseHandler handler = new DataBaseHandler();
+        ResultSet resultSet = handler.getContactInNumber(phoneNumber);
+        long counter = 0L;
+        while (true) {
+            try {
+                if (!resultSet.next()) break;
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+            counter++;
+        }
+        if (counter >= 1L) {
+            flag = false;
+            shakeFields();
+            System.out.println("This contact is already exist");
+        }
+        return flag;
     }
 
     // добавление нового контакта

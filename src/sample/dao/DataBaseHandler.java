@@ -155,4 +155,24 @@ public class DataBaseHandler extends Configs {
         }
         System.out.println("Contact delete successfully");
     }
+
+    // проверка контакта при добавлении на наличие его в БД
+    public ResultSet getContactInNumber(String phoneNumber) {
+        ResultSet resultSet = null;
+
+        String select = "SELECT * FROM " + Const.CONTACTS_TABLE + " WHERE " +
+                Const.CONTACT_USER_ID + " = ? AND " + Const.CONTACT_PHONE_NUMBER +
+                " = ?;";
+
+        try {
+            PreparedStatement statement = getDbConnection().prepareStatement(select);
+            statement.setString(1, id);
+            statement.setString(2, phoneNumber);
+
+            resultSet = statement.executeQuery(); // метод, который позволяет получить из БД
+        } catch (SQLException | ClassNotFoundException throwables) {
+            throwables.printStackTrace();
+        }
+        return resultSet;
+    }
 }
