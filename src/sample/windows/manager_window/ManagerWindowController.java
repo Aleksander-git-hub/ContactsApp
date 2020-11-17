@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -47,7 +46,19 @@ public class ManagerWindowController {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
         });
+    }
+
+    public static void entranceToManagerWindow() {
+        Stage stage = new Stage();
+        try {
+            Parent root = FXMLLoader.load(ManagerWindowController.class.
+                    getResource("/sample/windows/manager_window/manager_window.fxml"));
+            stage.setScene(new Scene(root));
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

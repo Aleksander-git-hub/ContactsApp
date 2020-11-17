@@ -1,7 +1,10 @@
 package sample.users;
 
+import java.sql.ResultSet;
+
 public class User
 {
+    private ResultSet userId;
     private String login;
     private String password;
     private String email;
@@ -9,10 +12,23 @@ public class User
     public User() {
     }
 
+    public User(String login, String password) {
+        this.login = login;
+        this.password = password;
+    }
+
     public User(String login, String password, String email) {
         this.login = login;
         this.password = password;
         this.email = email;
+    }
+
+    public ResultSet getUserId() {
+        return userId;
+    }
+
+    public void setUserId(ResultSet userId) {
+        this.userId = userId;
     }
 
     public String getLogin() {

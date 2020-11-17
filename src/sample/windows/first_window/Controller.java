@@ -16,7 +16,11 @@ import javafx.stage.Stage;
 import sample.animations.Shake;
 import sample.dao.DataBaseHandler;
 import sample.users.User;
+import sample.windows.add_window.AddWindowController;
+import sample.windows.manager_window.ManagerWindowController;
 import sample.windows.sign_up_window.SignUpController;
+
+import javax.xml.crypto.Data;
 
 public class Controller
 {
@@ -49,10 +53,9 @@ public class Controller
             if (!loginText.equals("") && !loginPassword.equals("")) {
                 boolean tmp = loginUser(loginText, loginPassword);
                 if (tmp) {
-                    entrance();
-                    /*ManagerWindowController managerWindowController =
-                            new ManagerWindowController();
-                    managerWindowController.entrance(signButton);*/
+                    // Вход в ManagerWindow
+                    signButton.getScene().getWindow().hide();
+                    ManagerWindowController.entranceToManagerWindow();
                     System.out.println("Entrance has been complete");
                 }
             } else {
@@ -74,27 +77,24 @@ public class Controller
                 e.printStackTrace();
             }
         });
-
-//        // Вход в ManagerWindow
-//        signButton.setOnAction(event -> {
-//           entrance();
-//        });
-
     }
 
     private boolean loginUser(String loginText, String loginPassword) {
         boolean tmp = false;
         DataBaseHandler handler = new DataBaseHandler();
-        User user = new User();
-        user.setLogin(loginText);
-        user.setPassword(loginPassword);
+
+        User user = new User(loginText, loginPassword);
+        /*// передаем пользователя который зайдет в ManagerWindow
+        AddWindowController.myUser(user);*/
+        //User user = new User(loginText, loginPassword);
+
         ResultSet resultSet = handler.getUser(user);
 
         int counter = 0;
-        // проходим по всем взятым пользователям из БД
-//        while (resultSet.next()) {
-//            counter++;
-//        }
+         /*проходим по всем взятым пользователям из БД
+        while (resultSet.next()) {
+            counter++;
+        }*/
         while (true) {
             try {
                 if (!resultSet.next()) break;
@@ -119,20 +119,5 @@ public class Controller
         userPasswordAnimation.playAnimation();
     }
 
-    // Вход в ManagerWindow
-    private void entrance() {
-        signButton.getScene().getWindow().hide();
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/sample/windows/manager_window/manager_window.fxml"));
-        try {
-            loader.load();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Parent root = loader.getRoot();
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root));
-        stage.showAndWait();
-    }
 }
 

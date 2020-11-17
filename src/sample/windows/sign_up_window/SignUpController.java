@@ -15,10 +15,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.omg.CORBA.DATA_CONVERSION;
 import sample.animations.Shake;
 import sample.dao.DataBaseHandler;
 import sample.users.User;
+import sample.windows.add_window.AddWindowController;
+import sample.windows.manager_window.ManagerWindowController;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
@@ -53,10 +57,12 @@ public class SignUpController {
             String passwordText = passwordNewUser.getText().trim();
             String emailText = emailNewUser.getText().intern();
             DataBaseHandler handler = new DataBaseHandler();
-            User user = new User();
-            user.setLogin(loginText);
-            user.setPassword(passwordText);
-            user.setEmail(emailText);
+
+            User user = new User(loginText, passwordText, emailText);
+            /*// передаем пользователя который зайдет в ManagerWindow
+            AddWindowController.myUser(user);*/
+
+            //User user = new User(loginText, passwordText, emailText);
 
             if (!loginText.equals("") && !passwordText.equals("")) {
                 boolean flag = signUser(user, handler);
@@ -70,7 +76,9 @@ public class SignUpController {
                     } catch (IOException | MessagingException e) {
                         e.printStackTrace();
                     }
-                    entrance();
+                    //  после добавления нового user заходим в ManagerWindow
+                    signUpNewUser.getScene().getWindow().hide();
+                    ManagerWindowController.entranceToManagerWindow();
                 }
             } else {
                 shakeFields();
@@ -121,22 +129,6 @@ public class SignUpController {
                 "You are successfully registered in our application \"MyContacts\". " +
                 "We wish you a pleasant use!");
         return message;
-    }
-
-    //  после добавления нового user заходим в ManagerWindow
-    private void entrance() {
-        signUpNewUser.getScene().getWindow().hide();
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/sample/windows/manager_window/manager_window.fxml"));
-        try {
-            loader.load();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Parent root = loader.getRoot();
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root));
-        stage.showAndWait();
     }
 
     // проверяем зарегистрирован уже такой пользователь или нет

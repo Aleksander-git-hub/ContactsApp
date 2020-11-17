@@ -2,10 +2,12 @@ package sample.contact;
 
 import sample.manager.Manager;
 
+import java.sql.ResultSet;
 import java.util.Objects;
 
 public class Contact extends Manager
 {
+    private ResultSet userId;
     private Long id;
     private String firstName;
     private String secondName;
@@ -24,6 +26,14 @@ public class Contact extends Manager
         this.secondName = secondName;
         this.phoneNumber = phoneNumber;
         this.email = email;
+    }
+
+    public ResultSet getUserId() {
+        return userId;
+    }
+
+    public void setUserId(ResultSet userId) {
+        this.userId = userId;
     }
 
     public Long getId() {

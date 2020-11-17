@@ -1,10 +1,15 @@
 package sample.windows.add_window;
 
 import java.net.URL;
+import java.sql.ResultSet;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import sample.animations.Shake;
+import sample.contact.Contact;
+import sample.dao.DataBaseHandler;
+import sample.users.User;
 
 public class AddWindowController {
 
@@ -31,11 +36,38 @@ public class AddWindowController {
 
     @FXML
     void initialize() {
-        assert firstNameField != null : "fx:id=\"firstNameField\" was not injected: check your FXML file 'add_window.fxml'.";
-        assert secondNameField != null : "fx:id=\"secondNameField\" was not injected: check your FXML file 'add_window.fxml'.";
-        assert emailField != null : "fx:id=\"emailField\" was not injected: check your FXML file 'add_window.fxml'.";
-        assert phoneNumberField != null : "fx:id=\"phoneNumberField\" was not injected: check your FXML file 'add_window.fxml'.";
-        assert addButton != null : "fx:id=\"addButton\" was not injected: check your FXML file 'add_window.fxml'.";
+        addButton.setOnAction(event -> {
+            String firstName = firstNameField.getText().trim();
+            String secondName = secondNameField.getText().trim();
+            String phoneNumber = phoneNumberField.getText().trim();
+            String email = emailField.getText().trim();
 
+            if (!firstName.equals("") && !secondName.equals("") &&
+            !phoneNumber.equals("") && !email.equals("")) {
+                Contact contact = new Contact(firstName, secondName,
+                        phoneNumber, email);
+
+                setNewContact(contact);
+            } else {
+                shakeFields();
+            }
+        });
+    }
+
+    private void setNewContact(Contact contact) {
+        DataBaseHandler handler = new DataBaseHandler();
+        handler.setContact(contact);
+
+    }
+
+    private void shakeFields() {
+        Shake firstNameAnimation = new Shake(firstNameField);
+        Shake secondNameAnimation = new Shake(secondNameField);
+        Shake phoneNumberAnimation = new Shake(phoneNumberField);
+        Shake emailAnimation = new Shake(emailField);
+        firstNameAnimation.playAnimation();
+        secondNameAnimation.playAnimation();
+        phoneNumberAnimation.playAnimation();
+        emailAnimation.playAnimation();
     }
 }
