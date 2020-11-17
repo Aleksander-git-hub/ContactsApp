@@ -48,12 +48,14 @@ public class AddWindowController {
                         phoneNumber, email);
 
                 setNewContact(contact);
+                System.out.println("Contact add successfully");
             } else {
                 shakeFields();
             }
         });
     }
 
+    // добавление нового контакта
     private void setNewContact(Contact contact) {
         DataBaseHandler handler = new DataBaseHandler();
         handler.setContact(contact);

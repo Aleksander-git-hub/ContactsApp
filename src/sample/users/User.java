@@ -23,10 +23,6 @@ public class User
         this.email = email;
     }
 
-    public ResultSet getUserId() {
-        return userId;
-    }
-
     public void setUserId(ResultSet userId) {
         this.userId = userId;
     }

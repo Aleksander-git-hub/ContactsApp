@@ -66,7 +66,6 @@ public class DataBaseHandler extends Configs {
             statement.setString(4, contact.getPhoneNumber());
             statement.setString(5, contact.getEmail());
             statement.executeUpdate();
-            System.out.println("Contact add successfully");
         } catch (SQLException | ClassNotFoundException throwables) {
             throwables.printStackTrace();
         }
@@ -97,6 +96,27 @@ public class DataBaseHandler extends Configs {
         return resultSet;
     }
 
+    // проверка на наличие контакта в БД
+    public ResultSet getContact(Contact contact) {
+        ResultSet resultSet = null;
+
+        String select = "SELECT * FROM " + Const.CONTACTS_TABLE + " WHERE " +
+                Const.CONTACT_USER_ID + " = ? AND " +
+                Const.CONTACT_FIRST_NAME + " = ? AND " + Const.CONTACT_SECOND_NAME + " = ?";
+
+        try {
+            PreparedStatement statement = getDbConnection().prepareStatement(select);
+            statement.setString(1, id);
+            statement.setString(2, contact.getFirstName());
+            statement.setString(3, contact.getSecondName());
+
+            resultSet = statement.executeQuery(); // метод, который позволяет получить из БД
+        } catch (SQLException | ClassNotFoundException throwables) {
+            throwables.printStackTrace();
+        }
+        return resultSet;
+    }
+
     // получаем ID пользователя
     private ResultSet getUserIdFromDB(User user) {
         String login = user.getLogin();
@@ -114,5 +134,25 @@ public class DataBaseHandler extends Configs {
             throwables.printStackTrace();
         }
         return id;
+    }
+
+    // удаление котакта из БД
+    public void deleteContactFromDB(Contact contact) {
+        String name = contact.getFirstName();
+        String secondName = contact.getSecondName();
+        ResultSet resultSet = null;
+        String deleteContact = "DELETE FROM " + Const.CONTACTS_TABLE + " WHERE " +
+                Const.CONTACT_USER_ID + " = ? AND " + Const.CONTACT_FIRST_NAME +
+                " = ? AND " + Const.CONTACT_SECOND_NAME + " = ?;";
+        try {
+            PreparedStatement statement = getDbConnection().prepareStatement(deleteContact);
+            statement.setString(1, id);
+            statement.setString(2, name);
+            statement.setString(3, secondName);
+            statement.executeUpdate();
+        } catch (SQLException | ClassNotFoundException throwables) {
+            throwables.printStackTrace();
+        }
+        System.out.println("Contact delete successfully");
     }
 }

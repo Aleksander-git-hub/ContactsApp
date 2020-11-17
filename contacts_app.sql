@@ -30,3 +30,6 @@ VALUES (
     (SELECT user_id FROM users WHERE user_login = '' AND user_password = ''),
     'name', 'secondName', 'phoneNumber', 'email')
 );
+
+DELETE FROM contacts WHERE contact_user_id = '2' AND contact_first_name = 'Илья' AND
+	contact_second_name = 'Морозов';

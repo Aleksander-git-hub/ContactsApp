@@ -59,10 +59,6 @@ public class SignUpController {
             DataBaseHandler handler = new DataBaseHandler();
 
             User user = new User(loginText, passwordText, emailText);
-            /*// передаем пользователя который зайдет в ManagerWindow
-            AddWindowController.myUser(user);*/
-
-            //User user = new User(loginText, passwordText, emailText);
 
             if (!loginText.equals("") && !passwordText.equals("")) {
                 boolean flag = signUser(user, handler);
