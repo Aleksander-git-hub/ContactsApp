@@ -175,4 +175,24 @@ public class DataBaseHandler extends Configs {
         }
         return resultSet;
     }
+
+    // ищем контакт, который надо обновить
+    public ResultSet findContact(Contact contact) {
+        ResultSet resultSet = null;
+
+        String findThisContact = "SELECT * FROM " + Const.CONTACTS_TABLE +
+                " WHERE " + Const.CONTACT_USER_ID + " = ? AND " +
+                Const.CONTACT_FIRST_NAME + " = ? AND " + Const.CONTACT_SECOND_NAME +
+                " = ?;";
+        try {
+            PreparedStatement statement = getDbConnection().prepareStatement(findThisContact);
+            statement.setString(1, id);
+            statement.setString(2, contact.getFirstName());
+            statement.setString(3, contact.getSecondName());
+            resultSet = statement.executeQuery();
+        } catch (SQLException | ClassNotFoundException throwables) {
+            throwables.printStackTrace();
+        }
+        return resultSet;
+    }
 }

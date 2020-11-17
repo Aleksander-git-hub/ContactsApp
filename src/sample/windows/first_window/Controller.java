@@ -84,9 +84,6 @@ public class Controller
         DataBaseHandler handler = new DataBaseHandler();
 
         User user = new User(loginText, loginPassword);
-        /*// передаем пользователя который зайдет в ManagerWindow
-        AddWindowController.myUser(user);*/
-        //User user = new User(loginText, loginPassword);
 
         ResultSet resultSet = handler.getUser(user);
 
