@@ -12,7 +12,8 @@ import java.sql.*;
 
 public class DataBaseHandler extends Configs {
     Connection dbConnection;
-    private static String id = "";
+    private static String idUser = "";
+    private static int idContact = 0;
 
     public Connection getDbConnection()
             throws ClassNotFoundException, SQLException {
@@ -45,7 +46,7 @@ public class DataBaseHandler extends Configs {
             statement.executeUpdate(); // метод, который закидывает в базу данных
             ResultSet idTemp = getUserIdFromDB(user);
             if (idTemp.next()) {
-                id = idTemp.getString(Const.USER_ID);
+                idUser = idTemp.getString(Const.USER_ID);
             }
         } catch (SQLException | ClassNotFoundException throwables) {
             throwables.printStackTrace();
@@ -60,7 +61,7 @@ public class DataBaseHandler extends Configs {
                 "VALUES(?,?,?,?,?)";
         try {
             PreparedStatement statement = getDbConnection().prepareStatement(insert);
-            statement.setString(1, id); // находим ID нашего user
+            statement.setString(1, idUser); // находим ID нашего user
             statement.setString(2, contact.getFirstName());
             statement.setString(3, contact.getSecondName());
             statement.setString(4, contact.getPhoneNumber());
@@ -88,7 +89,7 @@ public class DataBaseHandler extends Configs {
             // при входе в приложение в id положим значение id нашего пользователя
             ResultSet idTemp = getUserIdFromDB(user);
             if (idTemp.next()) {
-                id = idTemp.getString(Const.USER_ID);
+                idUser = idTemp.getString(Const.USER_ID);
             }
         } catch (SQLException | ClassNotFoundException throwables) {
             throwables.printStackTrace();
@@ -106,7 +107,7 @@ public class DataBaseHandler extends Configs {
 
         try {
             PreparedStatement statement = getDbConnection().prepareStatement(select);
-            statement.setString(1, id);
+            statement.setString(1, idUser);
             statement.setString(2, contact.getFirstName());
             statement.setString(3, contact.getSecondName());
 
@@ -146,7 +147,7 @@ public class DataBaseHandler extends Configs {
                 " = ? AND " + Const.CONTACT_SECOND_NAME + " = ?;";
         try {
             PreparedStatement statement = getDbConnection().prepareStatement(deleteContact);
-            statement.setString(1, id);
+            statement.setString(1, idUser);
             statement.setString(2, name);
             statement.setString(3, secondName);
             statement.executeUpdate();
@@ -157,17 +158,19 @@ public class DataBaseHandler extends Configs {
     }
 
     // проверка контакта при добавлении на наличие его в БД
-    public ResultSet getContactInNumber(String phoneNumber) {
+    public ResultSet getContactInNumber(String firstName, String secondName, String phoneNumber) {
         ResultSet resultSet = null;
 
         String select = "SELECT * FROM " + Const.CONTACTS_TABLE + " WHERE " +
-                Const.CONTACT_USER_ID + " = ? AND " + Const.CONTACT_PHONE_NUMBER +
-                " = ?;";
+                Const.CONTACT_USER_ID + " = ? AND " + Const.CONTACT_FIRST_NAME + " = ? AND " +
+                Const.CONTACT_SECOND_NAME + " = ? AND " + Const.CONTACT_PHONE_NUMBER + " = ?;";
 
         try {
             PreparedStatement statement = getDbConnection().prepareStatement(select);
-            statement.setString(1, id);
-            statement.setString(2, phoneNumber);
+            statement.setString(1, idUser);
+            statement.setString(2, firstName);
+            statement.setString(3, secondName);
+            statement.setString(4, phoneNumber);
 
             resultSet = statement.executeQuery(); // метод, который позволяет получить из БД
         } catch (SQLException | ClassNotFoundException throwables) {
@@ -186,13 +189,59 @@ public class DataBaseHandler extends Configs {
                 " = ?;";
         try {
             PreparedStatement statement = getDbConnection().prepareStatement(findThisContact);
-            statement.setString(1, id);
+            statement.setString(1, idUser);
             statement.setString(2, contact.getFirstName());
             statement.setString(3, contact.getSecondName());
             resultSet = statement.executeQuery();
+            ResultSet idContactTemp = getContactIdFromDB(contact);
+            if (idContactTemp.next()) {
+                idContact = idContactTemp.getInt(Const.CONTACT_ID);
+            }
         } catch (SQLException | ClassNotFoundException throwables) {
             throwables.printStackTrace();
         }
         return resultSet;
+    }
+
+    // получаем id нашего контакта
+    private ResultSet getContactIdFromDB(Contact contact) {
+        ResultSet id = null;
+        String userId = "SELECT " + Const.CONTACT_ID + " FROM " + Const.CONTACTS_TABLE +
+                " WHERE " + Const.CONTACT_USER_ID + " = ? AND " + Const.CONTACT_FIRST_NAME +
+                " = ? AND " + Const.CONTACT_SECOND_NAME + " = ?;";
+        try {
+            PreparedStatement statement = getDbConnection().prepareStatement(userId);
+            statement.setString(1, idUser);
+            statement.setString(2, contact.getFirstName());
+            statement.setString(3, contact.getSecondName());
+            id = statement.executeQuery();
+        } catch (SQLException | ClassNotFoundException throwables) {
+            throwables.printStackTrace();
+        }
+        return id;
+    }
+
+    public void updateThisContact(Contact contact) {
+        String update = "UPDATE " + Const.CONTACTS_TABLE + " SET " +
+                Const.CONTACT_FIRST_NAME + " = ?, " + Const.CONTACT_SECOND_NAME +
+                " = ?, " + Const.CONTACT_PHONE_NUMBER + " = ?, " + Const.CONTACT_EMAIL +
+                " = ? WHERE " + Const.CONTACT_USER_ID + " = ? AND " + Const.CONTACT_ID +
+                " = ?;";
+        /*UPDATE contacts SET contact_first_name = 'Вика', contact_second_name = 'Чугунова'
+        WHERE contact_user_id = '1' AND contact_id = '1';*/
+
+        try {
+            PreparedStatement statement = getDbConnection().prepareStatement(update);
+            statement.setString(1, contact.getFirstName());
+            statement.setString(2, contact.getSecondName());
+            statement.setString(3, contact.getPhoneNumber());
+            statement.setString(4, contact.getEmail());
+            statement.setString(5, idUser);
+            statement.setInt(6, idContact);
+            statement.executeUpdate();
+            System.out.println("Contact update!");
+        } catch (SQLException | ClassNotFoundException throwables) {
+            throwables.printStackTrace();
+        }
     }
 }

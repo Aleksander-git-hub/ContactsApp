@@ -16,11 +16,8 @@ import javafx.stage.Stage;
 import sample.animations.Shake;
 import sample.dao.DataBaseHandler;
 import sample.users.User;
-import sample.windows.add_window.AddWindowController;
 import sample.windows.manager_window.ManagerWindowController;
 import sample.windows.sign_up_window.SignUpController;
-
-import javax.xml.crypto.Data;
 
 public class Controller
 {

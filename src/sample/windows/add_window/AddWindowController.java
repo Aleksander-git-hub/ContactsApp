@@ -48,7 +48,8 @@ public class AddWindowController {
                 Contact contact = new Contact(firstName, secondName,
                         phoneNumber, email);
                 // проверяем по номеру есть такой контакт или нет в БД
-                boolean flag = contactValidator(contact.getPhoneNumber());
+                boolean flag = contactValidator(contact.getFirstName(), contact.getSecondName(),
+                        contact.getPhoneNumber());
                 if (flag) {
                     setNewContact(contact);
                     System.out.println("Contact add successfully");
@@ -60,10 +61,10 @@ public class AddWindowController {
     }
 
     // проверяем по номеру есть такой контакт или нет в БД
-    private boolean contactValidator(String phoneNumber) {
+    private boolean contactValidator(String firstName, String secondName, String phoneNumber) {
         boolean flag = true;
         DataBaseHandler handler = new DataBaseHandler();
-        ResultSet resultSet = handler.getContactInNumber(phoneNumber);
+        ResultSet resultSet = handler.getContactInNumber(firstName, secondName, phoneNumber);
         long counter = 0L;
         while (true) {
             try {

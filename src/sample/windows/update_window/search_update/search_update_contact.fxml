@@ -21,9 +21,9 @@
                         <Font name="Verdana" size="20.0" />
                     </font>
                 </Button>
-            <Label fx:id="updateThisContactLabel" layoutX="22.0" layoutY="31.0" prefHeight="40.0" prefWidth="345.0" style="-fx-background-color: green; -fx-border-color: black;" text="Update this Contact">
+            <Label fx:id="updateThisContactLabel" layoutX="3.0" layoutY="31.0" prefHeight="40.0" prefWidth="383.0" style="-fx-background-color: green; -fx-border-color: black;" text="Update this Contact">
                <font>
-                  <Font size="15.0" />
+                  <Font size="13.0" />
                </font>
             </Label>
             <TextField fx:id="firstNameField" layoutX="120.0" layoutY="87.0" promptText="First Name" style="-fx-background-color: yellow; -fx-border-color: black;" />

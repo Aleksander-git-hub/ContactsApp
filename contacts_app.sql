@@ -33,3 +33,6 @@ VALUES (
 
 DELETE FROM contacts WHERE contact_user_id = '2' AND contact_first_name = 'Илья' AND
 	contact_second_name = 'Морозов';
+
+UPDATE contacts SET contact_first_name = 'Вика', contact_second_name = 'Чугунова'
+    WHERE contact_user_id = '1' AND contact_id = '1';

@@ -48,6 +48,7 @@ public class UpdateWindowController {
                 if (flag) {
                     //тут заходим в следующее окно
                     updateButton.getScene().getWindow().hide();
+                    SearchUpdateWindowController.setContactFields(contact);
                     Stage stage = new Stage();
                     Parent root = null;
                     try {
