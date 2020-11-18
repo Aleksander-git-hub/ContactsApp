@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="700.0" style="-fx-background-color: #2E3348; -fx-border-color: silver;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.windows.show_window.ShowWindowController">
+    <children>
+        <AnchorPane layoutX="5.0" layoutY="91.0" prefHeight="306.0" prefWidth="690.0" style="-fx-background-color: #fafafa;">
+         <children>
+            <TableView fx:id="table" layoutX="14.0" layoutY="14.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="14.0">
+              <columns>
+                <TableColumn fx:id="idColumn" prefWidth="63.0" text="ID" />
+                <TableColumn fx:id="firstNameColumn" minWidth="0.0" prefWidth="150.0" text="First Name" />
+                  <TableColumn fx:id="lastNameColumn" prefWidth="150.0" text="Last Name" />
+                  <TableColumn fx:id="phoneNumberColumn" prefWidth="150.0" text="Phone Number" />
+                  <TableColumn fx:id="emailColumn" minWidth="4.0" prefWidth="150.0" text="Email" />
+              </columns>
+            </TableView>
+         </children>
+        </AnchorPane>
+        <Label layoutX="192.0" text="MyContacts" textFill="#ebe8e8">
+            <font>
+                <Font size="66.0" />
+            </font>
+        </Label>
+    </children>
+</AnchorPane>

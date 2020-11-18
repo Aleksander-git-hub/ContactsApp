@@ -25,6 +25,8 @@ CREATE TABLE contacts
     FOREIGN KEY(contact_user_id) REFERENCES users(user_id) ON DELETE RESTRICT
 );
 
+
+
 INSERT INTO contacts(contact_user_id, contact_first_name, contact_second_name, contact_phone_number, contact_email)
 VALUES (
     (SELECT user_id FROM users WHERE user_login = '' AND user_password = ''),

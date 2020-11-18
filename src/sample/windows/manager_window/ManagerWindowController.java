@@ -13,6 +13,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import sample.windows.add_window.AddWindowController;
 import sample.windows.delete_window.DeleteWindowController;
+import sample.windows.show_window.ShowWindowController;
 import sample.windows.update_window.UpdateWindowController;
 
 public class ManagerWindowController {
@@ -76,6 +77,20 @@ public class ManagerWindowController {
             try {
                 root = FXMLLoader.load(UpdateWindowController.class.
                         getResource("/sample/windows/update_window/update_window.fxml"));
+                stage.setScene(new Scene(root));
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+        // кнопка покажи все
+        getAllButton.setOnAction(event -> {
+            Stage stage = new Stage();
+            try {
+                Parent root = FXMLLoader.load(ShowWindowController.class.
+                        getResource("/sample/windows/show_window/show_window.fxml"));
                 stage.setScene(new Scene(root));
                 stage.initModality(Modality.APPLICATION_MODAL);
                 stage.show();

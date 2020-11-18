@@ -65,8 +65,6 @@ public class SearchUpdateWindowController
             } else {
                 shakeFields();
             }
-
-
         });
     }
 

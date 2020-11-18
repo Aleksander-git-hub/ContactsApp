@@ -244,4 +244,19 @@ public class DataBaseHandler extends Configs {
             throwables.printStackTrace();
         }
     }
+
+    // получаем все контакты под id нашего пользователя
+    public ResultSet getAllContactFromUser() {
+        ResultSet resultSet = null;
+        String selectMyContacts = "SELECT * FROM " + Const.CONTACTS_TABLE +
+                " WHERE " + Const.CONTACT_USER_ID + " = ?;";
+        try {
+            PreparedStatement statement = getDbConnection().prepareStatement(selectMyContacts);
+            statement.setString(1, idUser);
+            resultSet = statement.executeQuery();
+        } catch (SQLException | ClassNotFoundException throwables) {
+            throwables.printStackTrace();
+        }
+        return resultSet;
+    }
 }

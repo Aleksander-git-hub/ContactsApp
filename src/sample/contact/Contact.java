@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class Contact
 {
-    private Long id;
+    private int id;
     private String firstName;
     private String secondName;
     private String phoneNumber;
@@ -18,6 +18,14 @@ public class Contact
         this.secondName = secondName;
     }
 
+    public Contact(int id, String firstName, String secondName, String phoneNumber, String email) {
+        this.id = id;
+        this.firstName = firstName;
+        this.secondName = secondName;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+    }
+
     public Contact(String firstName, String secondName, String phoneNumber, String email) {
         this.firstName = firstName;
         this.secondName = secondName;
@@ -25,11 +33,11 @@ public class Contact
         this.email = email;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -70,7 +78,7 @@ public class Contact
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Contact contact = (Contact) o;
-        return id.equals(contact.id) &&
+        return id == (contact.id) &&
                 firstName.equals(contact.firstName) &&
                 secondName.equals(contact.secondName) &&
                 phoneNumber.equals(contact.phoneNumber) &&
