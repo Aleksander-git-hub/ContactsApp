@@ -6,6 +6,7 @@ package sample.dao;
 
 import sample.contact.Contact;
 import sample.users.User;
+import sample.windows.info_window.InfoWindowController;
 
 import java.sql.*;
 
@@ -154,7 +155,6 @@ public class DataBaseHandler extends Configs {
         } catch (SQLException | ClassNotFoundException throwables) {
             throwables.printStackTrace();
         }
-        System.out.println("Contact delete successfully");
     }
 
     // проверка контакта при добавлении на наличие его в БД
@@ -239,7 +239,8 @@ public class DataBaseHandler extends Configs {
             statement.setString(5, idUser);
             statement.setInt(6, idContact);
             statement.executeUpdate();
-            System.out.println("Contact update!");
+            InfoWindowController.setLabel("Contact update!");
+            InfoWindowController.entranceInfoWindow();
         } catch (SQLException | ClassNotFoundException throwables) {
             throwables.printStackTrace();
         }

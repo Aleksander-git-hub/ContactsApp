@@ -10,6 +10,7 @@ import javafx.scene.control.TextField;
 import sample.animations.Shake;
 import sample.contact.Contact;
 import sample.dao.DataBaseHandler;
+import sample.windows.info_window.InfoWindowController;
 
 public class DeleteWindowController {
 
@@ -40,6 +41,8 @@ public class DeleteWindowController {
                 boolean flag = contactValidator(contact);
                 if (!flag) {
                     deleteContact(contact);
+                    InfoWindowController.setLabel("contact has been deleted");
+                    InfoWindowController.entranceInfoWindow();
                 }
             } else {
                 shakeFields();
@@ -64,7 +67,8 @@ public class DeleteWindowController {
         if (counter == 0L) {
             flag = true;
             shakeFields();
-            System.out.println("This contact is not exist");
+            InfoWindowController.setLabel("This contact is not exist");
+            InfoWindowController.entranceInfoWindow();
         }
         return flag;
     }

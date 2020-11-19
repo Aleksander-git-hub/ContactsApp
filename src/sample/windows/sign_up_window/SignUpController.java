@@ -22,6 +22,7 @@ import sample.animations.Shake;
 import sample.dao.DataBaseHandler;
 import sample.users.User;
 import sample.windows.add_window.AddWindowController;
+import sample.windows.info_window.InfoWindowController;
 import sample.windows.manager_window.ManagerWindowController;
 
 import javax.mail.*;
@@ -73,6 +74,8 @@ public class SignUpController {
                         e.printStackTrace();
                     }
                     //  после добавления нового user заходим в ManagerWindow
+                    InfoWindowController.setLabel("registration completed successfully");
+                    InfoWindowController.entranceInfoWindow();
                     signUpNewUser.getScene().getWindow().hide();
                     ManagerWindowController.entranceToManagerWindow();
                 }

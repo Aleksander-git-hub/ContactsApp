@@ -11,6 +11,7 @@ import sample.animations.Shake;
 import sample.contact.Contact;
 import sample.dao.DataBaseHandler;
 import sample.users.User;
+import sample.windows.info_window.InfoWindowController;
 
 public class AddWindowController {
 
@@ -52,7 +53,8 @@ public class AddWindowController {
                         contact.getPhoneNumber());
                 if (flag) {
                     setNewContact(contact);
-                    System.out.println("Contact add successfully");
+                    InfoWindowController.setLabel("Contact add successfully");
+                    InfoWindowController.entranceInfoWindow();
                 }
             } else {
                 shakeFields();
